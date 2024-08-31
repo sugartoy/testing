@@ -107,6 +107,7 @@ function showResult() {
 
 function drawChart() {
     const ctx = document.getElementById('result-chart').getContext('2d');
+
     const data = {
         labels: ['스트레스', '감정 조절', '사회적 불안', '모험심', '계획성', '과거 회상', '자기 통제'],
         datasets: [{
@@ -126,7 +127,14 @@ function drawChart() {
                 ticks: {
                     beginAtZero: true,
                     min: 0,
-                    max: 3
+                    max: 3, // 중앙은 0, 가장자리는 3.0으로 고정
+                    stepSize: 0.5,
+                    callback: function(value) {
+                        return value.toFixed(1); // 소수점 한 자리로 표시
+                    }
+                },
+                pointLabels: {
+                    fontSize: 14
                 }
             }
         }
