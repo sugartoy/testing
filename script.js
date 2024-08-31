@@ -125,9 +125,9 @@ function drawChart() {
         options: {
             scale: {
                 ticks: {
-                    beginAtZero: true,
+                    beginAtZero: true, // 중앙을 0으로 고정
                     min: 0,
-                    max: 3, // 중앙은 0, 가장자리는 3.0으로 고정
+                    max: 3, // 가장자리를 3으로 고정
                     stepSize: 0.5,
                     callback: function(value) {
                         return value.toFixed(1); // 소수점 한 자리로 표시
