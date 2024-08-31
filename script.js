@@ -4,6 +4,7 @@ let currentQuestion = 0;
 const totalQuestions = 7;
 let scores = Array(totalQuestions).fill(0);
 let selectedAnswers = Array(totalQuestions).fill(null).map(() => Array(5).fill(null)); // 각 질문의 선택한 답변을 저장
+
 const questions = [
     ["나는 자주 스트레스를 느낀다.", "나는 쉽게 긴장한다.", "나는 자주 불안을 느낀다.", "나는 종종 피곤함을 느낀다.", "나는 자주 예민해진다."],
     ["나는 긍정적인 마음을 유지하려고 노력한다.", "나는 내 감정을 잘 조절한다.", "나는 내 감정에 대해 잘 이해하고 있다.", "나는 감정에 좌우되지 않는다.", "나는 자신감이 있다."],
@@ -58,9 +59,14 @@ function updatePageIndicator() {
     pageIndicator.textContent = `페이지 ${currentQuestion + 1} / ${totalQuestions}`;
 }
 
+function updateProgressBar() {
+    const progressBar = document.getElementById("progress-bar");
+    const progressPercentage = ((currentQuestion + 1) / totalQuestions) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
+}
+
 document.getElementById("next-button").addEventListener("click", () => {
     if (validateAnswers()) {
-        updateScores();
         if (currentQuestion < totalQuestions - 1) {
             currentQuestion++;
             showQuestion();
@@ -81,22 +87,19 @@ document.getElementById("prev-button").addEventListener("click", () => {
 
 function validateAnswers() {
     let allAnswered = true;
-    document.querySelectorAll(`#question-container input[type="radio"]`).forEach((input) => {
+    document.querySelectorAll(`#question-container input[type="radio"]`).forEach((input, index) => {
         const questionName = input.name;
         if (!document.querySelector(`input[name="${questionName}"]:checked`)) {
             allAnswered = false;
+        } else {
+            selectedAnswers[currentQuestion][index] = input.value; // 선택된 값을 저장
         }
     });
     return allAnswered;
 }
 
 function updateScores() {
-    document.querySelectorAll(`#question-container input[type="radio"]:checked`).forEach((input, index) => {
-        const value = parseInt(input.value);
-        selectedAnswers[currentQuestion][index] = value; // 선택된 답변을 저장
-        scores[currentQuestion] += value;
-    });
-    scores[currentQuestion] /= 5; // 평균 점수 계산
+    scores[currentQuestion] = selectedAnswers[currentQuestion].reduce((sum, val) => sum + parseInt(val), 0) / 5; // 평균 점수 계산
 }
 
 function showResult() {
@@ -112,6 +115,7 @@ function showResult() {
 
     document.getElementById("result-screen").appendChild(restartButton);
     document.getElementById("page-indicator").style.display = "none"; // 결과 페이지에서 페이지 표시 제거
+    document.getElementById("progress-bar-container").style.display = "none"; // 결과 페이지에서 프로그레스 바 제거
 }
 
 function drawChart() {
