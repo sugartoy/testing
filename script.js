@@ -124,7 +124,9 @@ function drawChart() {
         data: data,
         options: {
             scale: {
-                r: {
+                min: 0, // 중앙값을 0으로 고정
+                max: 3, // 최대값을 3으로 고정
+                ticks: {
                     beginAtZero: true, // 이 설정이 중앙을 0으로 고정합니다.
                     min: 0,             // 중앙값을 0으로 고정
                     max: 3,             // 가장자리를 3으로 고정
