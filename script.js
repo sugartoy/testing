@@ -3,8 +3,6 @@ document.getElementById("start-button").addEventListener("click", startTest);
 let currentQuestion = 0;
 const totalQuestions = 7;
 let scores = Array(totalQuestions).fill(0);
-let selectedAnswers = Array(totalQuestions).fill(null).map(() => Array(5).fill(null)); // 각 질문의 선택한 답변을 저장
-
 const questions = [
     ["나는 자주 스트레스를 느낀다.", "나는 쉽게 긴장한다.", "나는 자주 불안을 느낀다.", "나는 종종 피곤함을 느낀다.", "나는 자주 예민해진다."],
     ["나는 긍정적인 마음을 유지하려고 노력한다.", "나는 내 감정을 잘 조절한다.", "나는 내 감정에 대해 잘 이해하고 있다.", "나는 감정에 좌우되지 않는다.", "나는 자신감이 있다."],
@@ -37,12 +35,6 @@ function showQuestion() {
             </div>
         `;
         container.appendChild(questionElem);
-
-        // 기존에 선택한 답변이 있으면 그 답변을 선택 상태로 복원
-        const savedAnswer = selectedAnswers[currentQuestion][index];
-        if (savedAnswer !== null) {
-            container.querySelector(`input[name="q${index}"][value="${savedAnswer}"]`).checked = true;
-        }
     });
 
     updatePageIndicator();
@@ -67,6 +59,7 @@ function updateProgressBar() {
 
 document.getElementById("next-button").addEventListener("click", () => {
     if (validateAnswers()) {
+        updateScores();
         if (currentQuestion < totalQuestions - 1) {
             currentQuestion++;
             showQuestion();
@@ -87,20 +80,21 @@ document.getElementById("prev-button").addEventListener("click", () => {
 
 function validateAnswers() {
     let allAnswered = true;
-    document.querySelectorAll(`#question-container input[type="radio"]`).forEach((input, index) => {
+    document.querySelectorAll(`#question-container input[type="radio"]`).forEach((input) => {
         const questionName = input.name;
         if (!document.querySelector(`input[name="${questionName}"]:checked`)) {
             allAnswered = false;
-        } else {
-            selectedAnswers[currentQuestion][index] = parseInt(input.value); // 선택된 값을 저장
         }
     });
     return allAnswered;
 }
 
 function updateScores() {
-    // 점수를 합산하기 전에 초기화하여 중복 계산 방지
-    scores[currentQuestion] = selectedAnswers[currentQuestion].reduce((sum, val) => sum + val, 0) / 5; // 평균 점수 계산
+    let pageScore = 0;
+    document.querySelectorAll(`#question-container input[type="radio"]:checked`).forEach((input) => {
+        pageScore += parseInt(input.value);
+    });
+    scores[currentQuestion] = pageScore / 5; // 평균 점수 계산
 }
 
 function showResult() {
