@@ -92,14 +92,15 @@ function validateAnswers() {
         if (!document.querySelector(`input[name="${questionName}"]:checked`)) {
             allAnswered = false;
         } else {
-            selectedAnswers[currentQuestion][index] = input.value; // 선택된 값을 저장
+            selectedAnswers[currentQuestion][index] = parseInt(input.value); // 선택된 값을 저장
         }
     });
     return allAnswered;
 }
 
 function updateScores() {
-    scores[currentQuestion] = selectedAnswers[currentQuestion].reduce((sum, val) => sum + parseInt(val), 0) / 5; // 평균 점수 계산
+    // 점수를 합산하기 전에 초기화하여 중복 계산 방지
+    scores[currentQuestion] = selectedAnswers[currentQuestion].reduce((sum, val) => sum + val, 0) / 5; // 평균 점수 계산
 }
 
 function showResult() {
