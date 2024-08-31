@@ -110,4 +110,41 @@ function showResult() {
 
     document.getElementById("result-screen").appendChild(restartButton);
     document.getElementById("page-indicator").style.display = "none"; // 결과 페이지에서 페이지 표시 제거
-    document.getElementById("progress-bar-container").style.display = "none"; // 결과 페이지
+    document.getElementById("progress-bar-container").style.display = "none"; // 결과 페이지에서 프로그레스 바 제거
+}
+
+function drawChart() {
+    const ctx = document.getElementById('result-chart').getContext('2d');
+
+    const data = {
+        labels: ['스트레스', '감정 조절', '사회적 불안', '모험심', '계획성', '과거 회상', '자기 통제'],
+        datasets: [{
+            label: '심리 검사 결과',
+            data: scores,
+            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+            borderColor: 'rgba(54, 162, 235, 1)',
+            borderWidth: 1
+        }]
+    };
+
+    new Chart(ctx, {
+        type: 'radar',
+        data: data,
+        options: {
+            scales: {
+                min: 0, // 중앙값을 0으로 고정
+                max: 3, // 가장자리를 3으로 고정
+                r: {
+                    beginAtZero: true,
+                    stepSize: 0.5, // 0.5 단위로 눈금을 표시
+                    callback: function(value) {
+                        return value.toFixed(1); // 소수점 한 자리로 표시
+                    }
+                },
+                pointLabels: {
+                    fontSize: 14 // 축 라벨의 폰트 크기 설정
+                }
+            }
+        }
+    });
+}
