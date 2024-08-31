@@ -124,11 +124,13 @@ function drawChart() {
         data: data,
         options: {
             scale: {
+                min: 0, // 중앙값을 0으로 고정
+                max: 3, // 최대값을 3으로 고정
                 ticks: {
-                    beginAtZero: true, // 중앙을 0으로 고정
-                    min: 0,
-                    max: 3, // 가장자리를 3으로 고정
-                    stepSize: 0.5,
+                    beginAtZero: true, // 이 설정이 중앙을 0으로 고정합니다.
+                    min: 0,             // 중앙값을 0으로 고정
+                    max: 3,             // 가장자리를 3으로 고정
+                    stepSize: 0.5,      // 0.5 단위로 눈금을 표시
                     callback: function(value) {
                         return value.toFixed(1); // 소수점 한 자리로 표시
                     }
