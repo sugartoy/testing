@@ -157,12 +157,12 @@ button:hover {
 
 @media (max-width: 600px) {
     .answers {
-        flex-direction: column;
+        flex-direction: row;
         flex-wrap: nowrap;
     }
 
     .answers label {
-        font-size: 0.6em; /* 텍스트 크기 줄임 */
+        font-size: 0.4em; /* 텍스트 크기 줄임 */
         margin: 0 3px; /* 좌우 여백 조정 */
     }
 
