@@ -103,6 +103,7 @@ function updateScores() {
         pageScore += parseInt(input.value);
     });
     scores[currentQuestion] = pageScore / questions[currentQuestion].length; // 평균 점수 계산
+    pageScore = 0;
 }
 
 function showResult() {
