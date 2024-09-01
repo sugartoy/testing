@@ -30,16 +30,16 @@ function showQuestion() {
         questionElem.innerHTML = `
             <p>${question}</p>
             <div class="answers">
-                <input type="radio" name="q${index}" id="q${index}a1" value="0">
+                <input type="radio" name="q${currentQuestion}" id="q${index}a1" value="0">
                 <label for="q${index}a1"><span>1</span>전혀 그렇지 않다</label>
 
-                <input type="radio" name="q${index}" id="q${index}a2" value="1">
+                <input type="radio" name="q${currentQuestion}" id="q${index}a2" value="1">
                 <label for="q${index}a2"><span>2</span>가끔 그렇다</label>
 
-                <input type="radio" name="q${index}" id="q${index}a3" value="2">
+                <input type="radio" name="q${currentQuestion}" id="q${index}a3" value="2">
                 <label for="q${index}a3"><span>3</span>자주 그렇다</label>
 
-                <input type="radio" name="q${index}" id="q${index}a4" value="3">
+                <input type="radio" name="q${currentQuestion}" id="q${index}a4" value="3">
                 <label for="q${index}a4"><span>4</span>항상 그렇다</label>
             </div>
         `;
@@ -48,7 +48,7 @@ function showQuestion() {
         // 기존에 선택한 답변이 있으면 그 답변을 선택 상태로 복원
         const savedAnswer = selectedAnswers[currentQuestion][index];
         if (savedAnswer !== null) {
-            container.querySelector(`input[name="q${index}"][value="${savedAnswer}"]`).checked = true;
+            container.querySelector(`input[name="q${currentQuestion}"][value="${savedAnswer}"]`).checked = true;
         }
     });
 
@@ -74,6 +74,7 @@ function updateProgressBar() {
 
 document.getElementById("next-button").addEventListener("click", () => {
     if (validateAnswers()) {
+        updateScores();  // 선택할 때마다 점수를 업데이트
         if (currentQuestion < totalQuestions - 1) {
             currentQuestion++;
             showQuestion();
@@ -106,7 +107,6 @@ function validateAnswers() {
 }
 
 function updateScores() {
-    // 점수를 합산하기 전에 초기화하여 중복 계산 방지
     scores[currentQuestion] = selectedAnswers[currentQuestion].reduce((sum, val) => sum + val, 0) / 5; // 평균 점수 계산
 }
 
