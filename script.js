@@ -3,6 +3,8 @@ document.getElementById("start-button").addEventListener("click", startTest);
 let currentQuestion = 0;
 const totalQuestions = 7;
 let scores = Array(totalQuestions).fill(0);
+let selectedAnswers = Array(totalQuestions).fill(null).map(() => Array(5).fill(null)); // 각 질문의 선택한 답변을 저장
+
 const questions = [
     ["나는 자주 스트레스를 느낀다.", "나는 쉽게 긴장한다.", "나는 자주 불안을 느낀다.", "나는 종종 피곤함을 느낀다.", "나는 자주 예민해진다."],
     ["나는 긍정적인 마음을 유지하려고 노력한다.", "나는 내 감정을 잘 조절한다.", "나는 내 감정에 대해 잘 이해하고 있다.", "나는 감정에 좌우되지 않는다.", "나는 자신감이 있다."],
@@ -28,13 +30,26 @@ function showQuestion() {
         questionElem.innerHTML = `
             <p>${question}</p>
             <div class="answers">
-                <label><input type="radio" name="q${index}" value="0"> 전혀 그렇지 않다</label>
-                <label><input type="radio" name="q${index}" value="1"> 가끔 그렇다</label>
-                <label><input type="radio" name="q${index}" value="2"> 자주 그렇다</label>
-                <label><input type="radio" name="q${index}" value="3"> 항상 그렇다</label>
+                <input type="radio" name="q${index}" id="q${index}a1" value="0">
+                <label for="q${index}a1"><span>1</span>전혀 그렇지 않다</label>
+
+                <input type="radio" name="q${index}" id="q${index}a2" value="1">
+                <label for="q${index}a2"><span>2</span>가끔 그렇다</label>
+
+                <input type="radio" name="q${index}" id="q${index}a3" value="2">
+                <label for="q${index}a3"><span>3</span>자주 그렇다</label>
+
+                <input type="radio" name="q${index}" id="q${index}a4" value="3">
+                <label for="q${index}a4"><span>4</span>항상 그렇다</label>
             </div>
         `;
         container.appendChild(questionElem);
+
+        // 기존에 선택한 답변이 있으면 그 답변을 선택 상태로 복원
+        const savedAnswer = selectedAnswers[currentQuestion][index];
+        if (savedAnswer !== null) {
+            container.querySelector(`input[name="q${index}"][value="${savedAnswer}"]`).checked = true;
+        }
     });
 
     updatePageIndicator();
@@ -59,7 +74,6 @@ function updateProgressBar() {
 
 document.getElementById("next-button").addEventListener("click", () => {
     if (validateAnswers()) {
-        updateScores();
         if (currentQuestion < totalQuestions - 1) {
             currentQuestion++;
             showQuestion();
@@ -80,21 +94,20 @@ document.getElementById("prev-button").addEventListener("click", () => {
 
 function validateAnswers() {
     let allAnswered = true;
-    document.querySelectorAll(`#question-container input[type="radio"]`).forEach((input) => {
+    document.querySelectorAll(`#question-container input[type="radio"]`).forEach((input, index) => {
         const questionName = input.name;
         if (!document.querySelector(`input[name="${questionName}"]:checked`)) {
             allAnswered = false;
+        } else {
+            selectedAnswers[currentQuestion][index] = parseInt(input.value); // 선택된 값을 저장
         }
     });
     return allAnswered;
 }
 
 function updateScores() {
-    let pageScore = 0;
-    document.querySelectorAll(`#question-container input[type="radio"]:checked`).forEach((input) => {
-        pageScore += parseInt(input.value);
-    });
-    scores[currentQuestion] = pageScore / 5; // 평균 점수 계산
+    // 점수를 합산하기 전에 초기화하여 중복 계산 방지
+    scores[currentQuestion] = selectedAnswers[currentQuestion].reduce((sum, val) => sum + val, 0) / 5; // 평균 점수 계산
 }
 
 function showResult() {
@@ -131,20 +144,20 @@ function drawChart() {
         type: 'radar',
         data: data,
         options: {
-            scale: {
-                min: 0, // 중앙값을 0으로 고정
-                max: 3, // 최대값을 3으로 고정
-                ticks: {
-                    beginAtZero: true, // 이 설정이 중앙을 0으로 고정합니다.
-                    min: 0,             // 중앙값을 0으로 고정
-                    max: 3,             // 가장자리를 3으로 고정
-                    stepSize: 0.5,      // 0.5 단위로 눈금을 표시
-                    callback: function(value) {
-                        return value.toFixed(1); // 소수점 한 자리로 표시
+            scales: {
+                r: { // r scale은 Radar 차트의 반경(scale)입니다.
+                    min: 0, // 중앙값을 0으로 고정
+                    max: 3, // 가장자리를 3으로 고정
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 0.5, // 0.5 단위로 눈금을 표시
+                        callback: function(value) {
+                            return value.toFixed(1); // 소수점 한 자리로 표시
+                        }
+                    },
+                    pointLabels: {
+                        fontSize: 14 // 축 라벨의 폰트 크기 설정
                     }
-                },
-                pointLabels: {
-                    fontSize: 14
                 }
             }
         }
