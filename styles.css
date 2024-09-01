@@ -87,14 +87,9 @@ button:hover {
     transition: all 0.3s ease;
 }
 
-.answers input[type="radio"]:checked + span {
+.answers input[type="radio"]:checked + label span {
     border-color: #007BFF;
     background-color: white;
-    color: #007BFF;
-    font-weight: bold;
-}
-
-.answers input[type="radio"]:checked + span + label {
     color: #007BFF;
     font-weight: bold;
 }
