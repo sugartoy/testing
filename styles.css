@@ -19,7 +19,8 @@ body {
 }
 
 .start-image {
-    max-width: 100%;
+    max-width: 60%;
+    padding: 60px;
     height: auto;
 }
 
@@ -61,37 +62,10 @@ button:hover {
     margin: 10px 0;
 }
 
-.answers input[type="radio"] {
-    display: none; /* 기본 라디오 버튼을 숨깁니다 */
-}
-
 .answers label {
-    font-size: 0.8em;
-    color: #555;
-    display: block;
-    text-align: center;
-    cursor: pointer; /* 클릭 가능하도록 포인터 추가 */
-}
-
-.answers label span {
-    display: block;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-    background-color: #f0f0f0;
-    margin: 0 auto 5px auto;
-    font-size: 1em;
-    color: #ccc;
-    transition: all 0.3s ease;
-}
-
-.answers input[type="radio"]:checked + label span {
-    border-color: #007BFF;
-    background-color: white;
-    color: #007BFF;
-    font-weight: bold;
+    font-size: 0.9em;
+    margin: 0 5px;
+    white-space: nowrap;
 }
 
 #buttons-container {
@@ -102,31 +76,11 @@ button:hover {
 
 #page-indicator {
     position: absolute;
-    bottom: 60px; /* 프로그레스 바를 위한 공간 확보 */
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 1em;
     color: #555;
-}
-
-#progress-bar-container {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80%;
-    height: 10px;
-    background-color: #e0e0e0;
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-#progress-bar {
-    height: 100%;
-    background-color: #007BFF;
-    width: 0%;
-    border-radius: 5px;
-    transition: width 0.3s ease;
 }
 
 #result-chart {
@@ -147,9 +101,5 @@ button:hover {
 
     #page-indicator {
         font-size: 0.9em;
-    }
-
-    #progress-bar-container {
-        width: 90%;
     }
 }
