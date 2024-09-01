@@ -29,18 +29,18 @@ function showQuestion() {
         questionElem.innerHTML = `
             <p>${question}</p>
             <div class="answers">
-    <input type="radio" name="q1" id="q1a1" value="0">
-    <label for="q1a1"><span></span>전혀 그렇지 않다</label>
+                <input type="radio" name="q${index}" id="q${index}a1" value="0">
+                <label for="q${index}a1"><span></span>전혀 그렇지 않다</label>
 
-    <input type="radio" name="q1" id="q1a2" value="1">
-    <label for="q1a2"><span></span>가끔 그렇다</label>
+                <input type="radio" name="q${index}" id="q${index}a2" value="1">
+                <label for="q${index}a2"><span></span>가끔 그렇다</label>
 
-    <input type="radio" name="q1" id="q1a3" value="2">
-    <label for="q1a3"><span></span>자주 그렇다</label>
+                <input type="radio" name="q${index}" id="q${index}a3" value="2">
+                <label for="q${index}a3"><span></span>자주 그렇다</label>
 
-    <input type="radio" name="q1" id="q1a4" value="3">
-    <label for="q1a4"><span></span>항상 그렇다</label>
-</div>
+                <input type="radio" name="q${index}" id="q${index}a4" value="3">
+                <label for="q${index}a4"><span></span>항상 그렇다</label>
+            </div>
         `;
         container.appendChild(questionElem);
     });
