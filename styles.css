@@ -62,11 +62,50 @@ button:hover {
     margin: 10px 0;
 }
 
+.answers input[type="radio"] {
+    display: none; /* 기본 라디오 버튼을 숨깁니다 */
+}
+
 .answers label {
+    font-size: 0.8em;
+    color: #555;
+    display: block;
+    text-align: center;
+    cursor: pointer; /* 클릭 가능하도록 포인터 추가 */
+}
+
+.answers label span {
+    display: block;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background-color: #f0f0f0;
+    margin: 0 auto 5px auto;
+    font-size: 1em;
+    color: #ccc;
+    transition: all 0.3s ease;
+}
+.answers input[type="radio"]:checked + span {
+    border-color: #007BFF;
+    background-color: white;
+    color: #007BFF;
+    font-weight: bold;
+}
+
+.answers input[type="radio"]:checked + span + label {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+
+
+/* .answers label {
     font-size: 0.9em;
     margin: 0 5px;
     white-space: nowrap;
-}
+} */
 
 #buttons-container {
     display: flex;
