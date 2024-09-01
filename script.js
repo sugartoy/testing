@@ -102,7 +102,7 @@ function updateScores() {
     document.querySelectorAll(`#question-container input[type="radio"]:checked`).forEach((input) => {
         pageScore += parseInt(input.value);
     });
-    scores[currentQuestion] = pageScore / 5; // 평균 점수 계산
+    scores[currentQuestion] = pageScore / questions[currentQuestion].length; // 평균 점수 계산
 }
 
 function showResult() {
