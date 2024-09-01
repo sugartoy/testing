@@ -70,6 +70,7 @@ button:hover {
     color: #555;
     display: block;
     text-align: center;
+    cursor: pointer; /* 클릭 가능하도록 포인터 추가 */
 }
 
 .answers label span {
