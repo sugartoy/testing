@@ -19,7 +19,7 @@ const questions = [
 //     selectedAnswers[i] = Array(questions[i].length).fill(null)
 // }
 
-let selectedAnswers = Array(totalQuestions).fill(null).map((i) => Array(questions[i].length).fill(null)); // 각 질문의 선택한 답변을 저장
+let selectedAnswers = Array(totalQuestions).fill(null).map((index) => Array(questions[index].length).fill(null)); // 각 질문의 선택한 답변을 저장
 
 function startTest() {
     document.getElementById("start-screen").style.display = "none";
