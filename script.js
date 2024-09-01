@@ -14,10 +14,12 @@ const questions = [
      "특정인에 대한 허위 글이나 개인의 사생활에 관한 사실을 인터넷, SNS 등을 통해 불특정 다수에 공개하는 행위", "성적 수치심을 주거나, 위협하는 내용, 조롱하는 글, 그림, 동영상 등을 정보통신망을 통해 유포하는 행위", "공포심이나 불안감을 유발하는 문자, 음향, 영상 등을 휴대폰 등 정보통신망을 통해 반복적으로 보내는 행위","헤어진 여자친구에게 불안감을 조성하는 문자를 지속적으로 보내는 행위"]
 ];
 
-let selectedAnswers  = Array(totalQuestions).fill(null);
-for(i=0 ; i< 7 ; i += 1){
-    selectedAnswers[i] = Array(questions[i].length).fill(null)
-}    
+// let selectedAnswers  = Array(totalQuestions).fill(null);
+// for(i=0 ; i< 7 ; i += 1){
+//     selectedAnswers[i] = Array(questions[i].length).fill(null)
+// }
+
+let selectedAnswers = Array(totalQuestions).fill(null).map((i) => Array(questions[i].length).fill(null)); // 각 질문의 선택한 답변을 저장
 
 function startTest() {
     document.getElementById("start-screen").style.display = "none";
@@ -51,7 +53,7 @@ function showQuestion() {
 
         // 기존에 선택한 답변이 있으면 그 답변을 선택 상태로 복원
         const savedAnswer = selectedAnswers[currentQuestion][index];
-        if (savedAnswer[currentQuestion] !== null) {
+        if (savedAnswer !== null) {
             container.querySelector(`input[name="q${currentQuestion}"][value="${savedAnswer}"]`).checked = true;
         }
     });
