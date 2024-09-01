@@ -51,7 +51,7 @@ function showQuestion() {
 
         // 기존에 선택한 답변이 있으면 그 답변을 선택 상태로 복원
         const savedAnswer = selectedAnswers[currentQuestion][index];
-        if (savedAnswer !== null) {
+        if (savedAnswer[currentQuestion] !== null) {
             container.querySelector(`input[name="q${currentQuestion}"][value="${savedAnswer}"]`).checked = true;
         }
     });
