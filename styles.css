@@ -54,7 +54,7 @@ button:hover {
 }
 
 #question-container p {
-    font-size: 1.2em;
+    font-size: 0.9em;
     font-weight: bold;
     color: #333;
 }
@@ -162,7 +162,7 @@ button:hover {
     }
 
     .answers label {
-        font-size: 0.75em; /* 텍스트 크기 줄임 */
+        font-size: 0.6em; /* 텍스트 크기 줄임 */
         margin: 0 3px; /* 좌우 여백 조정 */
     }
 
